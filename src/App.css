@@ -2,6 +2,7 @@ html,
 body,
 #root {
   height: 100%;
+  background-color: rgb(63, 62, 62);
 }
 
 * {
@@ -34,7 +35,7 @@ p {
 }
 @media only screen and (min-width: 768px) {
   .App {
-    width: 30%;
+    width: 50%;
   }
 }
 
@@ -47,6 +48,7 @@ p {
 .clear {
   border: solid;
   grid-area: clear;
+  background-color: rgb(221, 215, 215);
 }
 
 #divide {
