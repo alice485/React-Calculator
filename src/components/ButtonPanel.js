@@ -95,23 +95,23 @@ class ButtonPanel extends Component {
   render() {
     let nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
     nums = nums.map(num => (
-      <NumButton onClick={this.handleNumClick} id={String(num)} key = {num} />
+      <NumButton onClick={this.handleNumClick} value={num} key = {num} />
     ));
     return (
       <Fragment>
         <Display value={this.state.displayValues} />
         <ClearButton onClick={this.handleClear} />
-        <OpsButton onClick={this.handleDelete} id="del" />
+        <OpsButton onClick={this.handleDelete} value="del" />
         <Fragment>{nums.slice(0, 3)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} id=" ÷ " />
+        <OpsButton onClick={this.handleNumClick} value=" ÷ " />
         <Fragment>{nums.slice(3, 6)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} id=" × " />
+        <OpsButton onClick={this.handleNumClick} value=" × " />
         <Fragment>{nums.slice(6, 9)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} id=" - " />
-        <OpsButton onClick={this.handleNumClick} id="." />
+        <OpsButton onClick={this.handleNumClick} value=" - " />
+        <OpsButton onClick={this.handleNumClick} value="." />
         <Fragment>{nums.slice(9)}</Fragment>
-        <OpsButton onClick={this.calculate} id="=" />
-        <OpsButton onClick={this.handleNumClick} id=" + " />
+        <OpsButton onClick={this.calculate} value="=" id = "equals" />
+        <OpsButton onClick={this.handleNumClick} value=" + " />
       </Fragment>
     );
   }

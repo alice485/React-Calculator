@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 class OpsButton extends Component {
   render() {
+    let opsClassName = this.props.value === "." || this.props.value === "=" ? "decimalAndEquals":"ops-button";
     return (
-      <div className="ops-button">
-        <p value={this.props.id} onClick={this.props.onClick}>
-          {this.props.id}
+      <div className={opsClassName}>
+        <p value={this.props.value} onClick={this.props.onClick}>
+          {this.props.value}
         </p>
       </div>
     );
