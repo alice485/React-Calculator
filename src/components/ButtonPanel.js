@@ -10,7 +10,9 @@ class ButtonPanel extends Component {
     this.state = { displayValues: "" };
   }
 
-  handleNumClick = e => {
+  /*this.state.displayValues is a string value
+    sets this.state.displayValues equal to the value attribute of the button pressed*/
+  handleButtonClick = e => {
     let currentValue = this.state.displayValues;
     this.setState(
       { displayValues: (currentValue += e.target.getAttribute("value")) },
@@ -19,6 +21,8 @@ class ButtonPanel extends Component {
       }
     );
   };
+
+  //runs through a list of operations, performing any multiplication or division it finds
   checkForDivMult(values) {
     for (let i = 0; i < values.length; i++) {
       if (values[i] === "×") {
@@ -31,6 +35,8 @@ class ButtonPanel extends Component {
       }
     }
   }
+
+  //runs through list of operations performing any addition or subtraction it finds
   doAddSubtract = values => {
     let result = null;
     for (let i = 0; i < values.length; i++) {
@@ -48,21 +54,29 @@ class ButtonPanel extends Component {
         }
       }
     }
+    //sets the state to the result once all operations are calculated
     this.setState({ displayValues: result }, () =>
       console.log(this.state.displayValues)
     );
   };
-  handleDelete = e => {
+
+  //deletes the last character from the display i.e., the state
+  handleDelete = () => {
     let toDeleteFrom = String(this.state.displayValues);
     let afterDeletion = toDeleteFrom.slice(0, -1);
     this.setState({ displayValues: afterDeletion }, () =>
       console.log(this.state)
     );
   };
-  handleClear = e => {
+
+  //clears the display i.e., the state
+  handleClear = () => {
     this.setState({ displayValues: "" }, () => console.log(this.state));
   };
-  calculate = e => {
+
+  //main calculation function; runs when you press "=" button
+  //does nothing if the display is blank or has only one number on it
+  calculate = () => {
     if (
       typeof this.state.displayValues === "number" ||
       this.state.displayValues === ""
@@ -94,24 +108,34 @@ class ButtonPanel extends Component {
 
   render() {
     let nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+    let ops = ["del", " ÷ ", " × ", " - ", ".", "=", " + "];
     nums = nums.map(num => (
-      <NumButton onClick={this.handleNumClick} value={num} key = {num} />
+      <NumButton onClick={this.handleButtonClick} value={num} key={num} />
     ));
+    ops = ops.map(op => {
+      let action;
+      if (op === "del") {
+        action = this.handleDelete;
+      } else if (op === "=") {
+        action = this.calculate;
+      } else {
+        action = this.handleButtonClick;
+      }
+      return <OpsButton onClick={action} value={op} key={op} />;
+    });
     return (
       <Fragment>
         <Display value={this.state.displayValues} />
         <ClearButton onClick={this.handleClear} />
-        <OpsButton onClick={this.handleDelete} value="del" />
+        <Fragment>{ops.slice(0, 1)}</Fragment>
         <Fragment>{nums.slice(0, 3)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} value=" ÷ " />
+        <Fragment>{ops.slice(1, 2)}</Fragment>
         <Fragment>{nums.slice(3, 6)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} value=" × " />
+        <Fragment>{ops.slice(2, 3)}</Fragment>
         <Fragment>{nums.slice(6, 9)}</Fragment>
-        <OpsButton onClick={this.handleNumClick} value=" - " />
-        <OpsButton onClick={this.handleNumClick} value="." />
+        <Fragment>{ops.slice(3, 5)}</Fragment>
         <Fragment>{nums.slice(9)}</Fragment>
-        <OpsButton onClick={this.calculate} value="=" id = "equals" />
-        <OpsButton onClick={this.handleNumClick} value=" + " />
+        <Fragment>{ops.slice(5)}</Fragment>
       </Fragment>
     );
   }
